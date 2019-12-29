@@ -1,43 +1,70 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import 'gestalt/dist/gestalt.css';
 import { NextPage, NextPageContext } from 'next';
 import AppHead from '../components/AppHead'
-import { Box } from 'gestalt';
-import { ThemeContext } from 'styled-components';
-import { ApolloClient, gql } from 'apollo-boost';
+import { ApolloClient, gql, NetworkStatus } from 'apollo-boost';
+import { RepositoryBrick, RepositoryBrickData } from '../components/RepositoryBrick';
+import { Masonry } from 'gestalt';
+import { UserInfo, UserInfoProps } from '../components/UserInfo';
 
-const Index: NextPage = (data: any) => {
-  const theme = useContext(ThemeContext);
+interface Repository {
+  nodes: Array<RepositoryBrickData>
+}
+
+interface IndexProps {
+  networkStatus: NetworkStatus,
+  user: UserInfoProps & {
+    repositories: Repository;
+  }
+}
+
+const Index: NextPage<IndexProps> = ({ networkStatus, user }: IndexProps) => {
   return (
     <>
       <AppHead />
-      {data.data.rates.map((d: any) => <Box
-        key={d.currency}
-        {...theme.box}
-        paddingX={3}
-        marginBottom={3}
-        color="lightGray"
-      >
-        {d.currency}
-      </Box>)
-      }
+      <UserInfo
+        name={user.name}
+        bio={user.bio}
+      />
+      <Masonry
+        comp={RepositoryBrick as any}
+        items={user.repositories.nodes}
+        minCols={1}
+        gutterWidth={6}
+      />
     </>
   );
 };
 
 Index.getInitialProps = async (ctx: NextPageContext & { apolloClient: ApolloClient<any> }) => {
-  console.log("loading");
   const result = await ctx.apolloClient
     .query({
       query: gql`
       {
-        rates(currency: "USD") {
-          currency
+        user(login: "franckLdx") {
+          name
+          bio
+          repositories(first: 50) {
+            nodes {
+              name
+              description
+              licenseInfo {
+                key, description
+              }
+              languages(first: 50) {
+                nodes {
+                  name
+                }
+              }
+            }
+            totalCount
+          }
         }
       }
-    `
+`
     });
-  return result;
+  const { networkStatus, data: { user } } = result
+  return { networkStatus, user };
 }
 
 export default Index;
