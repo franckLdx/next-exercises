@@ -18,6 +18,7 @@ export const theme: DefaultTheme = {
   brick: {
     color: secondaryColor,
     shape: "rounded",
+    padding: 2,
   },
   divider: {
     color: mainColor,
@@ -34,7 +35,7 @@ declare module 'styled-components' {
   export interface DefaultTheme {
     margin: Margin;
     box: Pick<BoxProps, 'color' | 'shape'>;
-    brick: Pick<BoxProps, 'color' | 'shape'>;
+    brick: Pick<BoxProps, 'color' | 'shape' | 'padding'>;
     divider: Pick<BoxProps, 'color' | 'height' | 'marginBottom'>;
     header: Pick<HeaderProps, 'color' | 'size'>;
   }

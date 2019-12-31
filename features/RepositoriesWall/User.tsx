@@ -3,21 +3,24 @@ import { UserInfo } from './data'
 import { ThemedBox, ThemedText, ThemedDivider, ThemedBrick, ThemedHeading } from '../../components/Themed';
 import { ThemeContext } from 'styled-components';
 
+interface UserProps {
+  user: UserInfo;
+}
 
-export const User: React.FC<UserInfo> = ({ name, bio }) => {
+export const User: React.FC<UserProps> = ({ user }) => {
   const { margin } = useContext(ThemeContext);
   return (
     <ThemedBox padding={2} marginBottom={margin}>
-      <ThemedBrick padding={2}>
-        <ThemedHeading>{name}</ThemedHeading>
-        <Bio bio={bio} />
+      <ThemedBrick>
+        <ThemedHeading>{user.name}</ThemedHeading>
+        <Bio bio={user.bio} />
       </ThemedBrick>
-    </ThemedBox >
+    </ThemedBox>
   );
 }
 
-const Bio: React.FC<{ bio: string }> = ({ bio }) => {
-  const actualBio = bio.trim();
+const Bio: React.FC<{ bio: string | null }> = ({ bio }) => {
+  const actualBio = bio?.trim();
   if (!actualBio) {
     return <React.Fragment />;
   }

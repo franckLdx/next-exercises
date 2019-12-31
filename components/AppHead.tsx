@@ -1,8 +1,12 @@
 import Head from "next/head";
 
-export default () => (
+interface AppHeadProps {
+  title: string;
+}
+
+const AppHead: React.FC<AppHeadProps> = ({ title }) => (
   <Head>
-    <title>FranckLdx repositories</title>
+    <title>{title}</title>
     <link
       rel="icon"
       type="image/x-icon"
@@ -11,3 +15,5 @@ export default () => (
     />
   </Head>
 );
+
+export default AppHead;

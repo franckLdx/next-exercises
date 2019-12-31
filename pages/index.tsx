@@ -30,8 +30,8 @@ const Index: NextPage<IndexProps> = ({ loading, error, data }: IndexProps) => {
   }
   return (
     <>
-      <AppHead />
-      <User name={data.name} bio={data.bio} />
+      <AppHead title={"FranckLdx repositories"} />
+      <User user={data} />
       <RepositoriesWall repositories={data.repositories.nodes} />
     </>
   );
@@ -55,18 +55,13 @@ const GET_USER_REPOSITORIES = gql`
       bio
       repositories(first: 50) {
         nodes {
+          id
           name
           description
-          licenseInfo {
-            key, description
-          }
-          languages(first: 50) {
-            nodes {
-              name
-            }
+          owner {
+            login
           }
         }
-        totalCount
       }
     }
   }

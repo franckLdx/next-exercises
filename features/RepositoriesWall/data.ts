@@ -1,11 +1,6 @@
 export interface UserInfo {
   name: string;
-  bio: string;
-}
-
-export interface LicenseInfo {
-  key: string;
-  description: string;
+  bio: string | null;
 }
 
 export interface Language {
@@ -15,6 +10,9 @@ export interface Language {
 export interface Repository {
   name: string;
   description: string;
-  licenseInfo: LicenseInfo;
-  languages: Language[];
+  owner: RepositoryOwner;
+}
+
+export interface RepositoryOwner {
+  login: string;
 }
