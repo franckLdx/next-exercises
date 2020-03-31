@@ -16,7 +16,7 @@
     "apollo-utilities": "^1.3.3",
     "gestalt": "^0.112.0",
     "graphql": "^14.5.8",
-    "next": "9.1.6",
+    "next": "9.3.2",
     "next-with-apollo": "^4.3.0",
     "prop-types": "^15.7.2",
     "react": "16.12.0",
