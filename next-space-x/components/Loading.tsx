@@ -2,8 +2,11 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Progress } from '@chakra-ui/core';
 import Router from 'next/router'
 
-export const Loading: React.FC = React.memo(
-  () => {
+interface Props {
+  marginBottom: number;
+}
+export const Loading: React.FC<Props> = React.memo(
+  ({ marginBottom }) => {
     const [refresh, setRefresh] = useState<number | undefined>(undefined);
     const [value, setValue] = useState(0);
     const [visibility, setVisibility] = useState<"visible" | "hidden">("hidden");
@@ -28,12 +31,22 @@ export const Loading: React.FC = React.memo(
     useEffect(
       () => {
         Router.events.on('routeChangeStart', startLoad);
-        Router.events.on('routeChangeComplete', stopLoad);
-        Router.events.on('routeChangeError', stopLoad);
+        // Router.events.on('routeChangeComplete', stopLoad);
+        // Router.events.on('routeChangeError', stopLoad);
       },
       [startLoad, stopLoad]
     );
 
-    return <Progress visibility={visibility} value={value} color="green" height="6px" hasStripe isAnimated />
+    return (
+      <Progress
+        marginBottom={marginBottom}
+        visibility={visibility}
+        value={value}
+        color="white"
+        height="6px"
+        hasStripe
+        isAnimated
+      />
+    )
   }
 );
