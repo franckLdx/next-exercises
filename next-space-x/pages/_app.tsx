@@ -2,7 +2,7 @@ import React from 'react';
 import { AppProps } from 'next/app'
 import { Nav } from '../components/Nav'
 import { ThemeProvider, CSSReset, ColorModeProvider } from "@chakra-ui/core";
-import { customTheme } from './_theme'
+import { customTheme } from '../components/_theme'
 import { Loading } from '../components/Loading';
 import { SetColorTheme } from '../components/setColorTheme';
 
