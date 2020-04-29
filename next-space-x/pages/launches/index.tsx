@@ -1,9 +1,9 @@
 import React from 'react';
-import { MyHead } from '../components/MyHead'
-import { getLaunches, LaunchesResult } from '../services/launches';
 import { NextPage } from 'next';
-import { SimpleGrid, Box } from '@chakra-ui/core';
-import { Launch } from '../components/launches/launch';
+import { SimpleGrid } from '@chakra-ui/core';
+import { LaunchesResult, getLaunches } from '../../services/launches';
+import { MyHead } from '../../components/MyHead';
+import { Launch } from '../../components/launches/launch';
 
 
 export async function getServerSideProps(): Promise<{ props: LaunchesResult }> {

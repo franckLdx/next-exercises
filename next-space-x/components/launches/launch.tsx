@@ -1,12 +1,13 @@
 import React, { useMemo } from "react";
 import { PseudoBox, Heading, Link } from "@chakra-ui/core";
-import { LaunchResult } from "../../services/launches";
+import { LaunchItemResult } from "../../services/launches";
 import { distanceDate } from "../../lib/misc";
 import { Carousel } from "../Carousel";
 
 interface Props {
-  launch: LaunchResult;
+  launch: LaunchItemResult;
 }
+
 export const Launch: React.FC<Props> = ({ launch }) => {
   const now = useMemo(() => Date.now(), []);
   return (

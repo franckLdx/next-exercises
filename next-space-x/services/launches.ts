@@ -24,7 +24,7 @@ query($limit: Int!, $offset: Int!) {
   }
 }`;
 
-export interface LaunchResult {
+export interface LaunchItemResult {
   id: string;
   mission_name: string;
   launch_date_utc: string;
@@ -40,7 +40,7 @@ export interface LaunchResult {
 }
 
 export interface LaunchesResult {
-  launches: LaunchResult[];
+  launches: LaunchItemResult[];
   totalCount: number;
 }
 
@@ -56,3 +56,78 @@ export async function getLaunches(pageNumber: number, pageSize: number): Promise
     totalCount: response.data.launchesPastResult.result.totalCount
   };
 }
+
+
+const GET_LAUNCH = gql`
+query($id: ID!) {
+  launch(id: $id) {
+    id
+    mission_name
+    details
+    launch_date_utc
+    launch_site {
+      site_name_long
+    }
+    links {
+      mission_patch
+      flickr_images
+      mission_patch_small
+      wikipedia
+      video_link
+    }
+    rocket {
+      rocket_name
+      rocket_type
+      rocket {
+        id
+      }
+    }
+    ships {
+      id
+      name
+      model
+      image
+    }
+  }
+}`;
+
+
+export interface LaunchResult {
+  id: string;
+  mission_name: string;
+  details: string;
+  launch_date_utc: string;
+  launch_site: {
+    site_name_long: string;
+  }
+  links: {
+    mission_patch: string;
+    flickr_images: string[];
+    wikipedia: string;
+    video_link: string;
+  }
+  rocket: {
+    rocket_name: string;
+    rocket_type: string;
+    rocket: {
+      id: number;
+    }
+  }
+  ships: {
+    id: number;
+    name: string;
+    model: string;
+    image: string;
+  }[]
+}
+
+export async function getLaunch(id: number): Promise<LaunchResult> {
+  const response = await client.query({
+    query: GET_LAUNCH,
+    variables: { id }
+  });
+  return response.data.launch;
+}
+
+
+
