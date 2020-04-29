@@ -1,21 +1,25 @@
 import React from 'react';
 import Link from 'next/link'
-import { PseudoBox, Flex } from '@chakra-ui/core';
+import { PseudoBox, Flex, Image } from '@chakra-ui/core';
 import { useRouter } from 'next/router';
-import styled from '@emotion/styled'
+import styled, { StyledComponent } from '@emotion/styled'
 import { space } from 'styled-system'
+import { number } from 'prop-types';
 
 const StyledNav = styled.nav`
   ${space}
 `;
 
 interface Props {
+  marginTop?: number;
   marginBottom: number;
+
 }
 export const Nav: React.FunctionComponent<Props> = React.memo(
-  ({ marginBottom }) => (
-    <StyledNav marginBottom={marginBottom}>
+  ({ marginTop, marginBottom }) => (
+    <StyledNav marginTop={marginTop} marginBottom={marginBottom}>
       <Flex flexWrap={"wrap"}>
+        <Image height="25px" src="spacex_logo_white.png" alt="SpaceX logo" />
         <NavItem href="/launches" label="Launches" />
         <NavItem href="/rockets" label="Rockets" />
       </Flex>

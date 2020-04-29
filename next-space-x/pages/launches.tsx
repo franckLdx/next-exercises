@@ -7,7 +7,7 @@ import { Launch } from '../components/launches/launch';
 
 
 export async function getServerSideProps(): Promise<{ props: LaunchesResult }> {
-  const launchesResult = await getLaunches(0, 0);
+  const launchesResult = await getLaunches(1, 9);
   return { props: launchesResult };
 }
 
