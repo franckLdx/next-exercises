@@ -14,9 +14,11 @@ export async function getServerSideProps(): Promise<{ props: LaunchesResult }> {
 const Launches: NextPage<LaunchesResult> = ({ launches }) => (
   <>
     <MyHead title="Launches" />
-    <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={2}>
-      {launches.map(launch => <Launch key={launch.id} launch={launch} />)}
-    </SimpleGrid>
+    <section>
+      <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={2}>
+        {launches.map(launch => <Launch key={launch.id} launch={launch} />)}
+      </SimpleGrid>
+    </section>
   </>
 );
 

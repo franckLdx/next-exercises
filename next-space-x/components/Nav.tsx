@@ -2,9 +2,8 @@ import React from 'react';
 import Link from 'next/link'
 import { PseudoBox, Flex, Image } from '@chakra-ui/core';
 import { useRouter } from 'next/router';
-import styled, { StyledComponent } from '@emotion/styled'
+import styled from '@emotion/styled'
 import { space } from 'styled-system'
-import { number } from 'prop-types';
 
 const StyledNav = styled.nav`
   ${space}
@@ -37,7 +36,7 @@ const NavItem: React.FC<NavItemProps> = React.memo(
     const router = useRouter();
     const borderBottom = router.pathname === href ? "4px solid" : undefined;
     return (
-      <PseudoBox color="gray.200" marginLeft={4} paddingBottom={1} borderBottom={borderBottom} _hover={{ color: "white" }}>
+      <PseudoBox color="whiteAlpha.900" marginLeft={4} paddingBottom={1} borderBottom={borderBottom} _hover={{ color: "white" }}>
         <Link href={href}>
           <a>
             {label}
