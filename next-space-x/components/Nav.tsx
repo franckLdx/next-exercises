@@ -4,6 +4,7 @@ import { PseudoBox, Flex, Image } from '@chakra-ui/core';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled'
 import { space } from 'styled-system'
+import { getLaunchesUrl, getRocketsUrl } from '../lib/url';
 
 const StyledNav = styled.nav`
   ${space}
@@ -19,8 +20,8 @@ export const Nav: React.FunctionComponent<Props> = React.memo(
     <StyledNav marginTop={marginTop} marginBottom={marginBottom}>
       <Flex flexWrap={"wrap"}>
         <Image height="25px" src="spacex_logo_white.png" alt="SpaceX logo" />
-        <NavItem href="/launches" label="Launches" />
-        <NavItem href="/rockets" label="Rockets" />
+        <NavItem href={getLaunchesUrl()} label="Launches" />
+        <NavItem href={getRocketsUrl()} label="Rockets" />
       </Flex>
     </StyledNav >
   )
