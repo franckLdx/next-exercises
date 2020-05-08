@@ -10,10 +10,11 @@ export const MediaDescription: React.FC<Props> = ({ imgUrl, altImg, children }) 
   <Box p={4} display="flex">
     {imgUrl && <Image
       rounded="lg"
-      width={{ md: 40 }}
+      width={{ base: 20, md: 40 }}
       src={imgUrl}
       alt={altImg}
       marginRight="15px"
+      objectFit="cover"
     />}
     <Box position="relative" top="0.5em">
       {children}

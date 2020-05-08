@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { NextPage } from 'next';
-import { SimpleGrid } from '@chakra-ui/core';
-import { LaunchesResult, getLaunches } from '../../services/launches';
+import { SimpleGrid, PseudoBox, Heading, Box } from '@chakra-ui/core';
+import { LaunchesResult, getLaunches, LaunchItemResult } from '../../services/launches';
 import { MyHead } from '../../components/MyHead';
-import { Launch } from '../../components/launches/launch';
+import Link from 'next/link';
+import { getLaunchUrl } from '../../lib/url';
+import { distanceDate } from '../../lib/misc';
+import { Carousel } from '../../components/Carousel';
+import { MyNextLink } from '../../components/MyNextLink';
 
 
 export async function getServerSideProps(): Promise<{ props: LaunchesResult }> {
@@ -22,5 +26,25 @@ const Launches: NextPage<LaunchesResult> = ({ launches }) => (
   </>
 );
 
-
 export default Launches;
+
+interface LaunchProps {
+  launch: LaunchItemResult;
+}
+
+const Launch: React.FC<LaunchProps> = ({ launch }) => {
+  const now = useMemo(() => Date.now(), []);
+  return (
+    <PseudoBox
+      border="1px solid" borderColor="whiteAlpha.900" padding={2}
+      _hover={{ border: "2px solid", borderColor: "white" }}>
+      <article>
+        <MyNextLink href={getLaunchUrl(launch.id)}>
+          <Heading as="h1" size="md">{launch.mission_name} -- {launch.rocket.rocket_name}</Heading>
+          {distanceDate(launch.launch_date_utc, now)} ago from {launch.launch_site.site_name_long}
+          <Carousel marginTop={"sm"} size="sm" images={launch.links.flickr_images} />
+        </MyNextLink>
+      </article>
+    </PseudoBox >
+  );
+};

@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { Image, ImageProps } from "@chakra-ui/core";
 
-type Props = ImageProps & {
+type ImagesProps = Exclude<ImageProps, 'src' | 'objectFit'>
+type Props = ImagesProps & {
   images: string[];
 }
-export const Carousel: React.FC<Props> = ({ images, size }) => {
+export const Carousel: React.FC<Props> = ({ images, ...imagesProps }) => {
   const [index, setIndex] = useState(0);
   const nextImage = useCallback(
     () => setIndex(index => index === images.length - 1 ? 0 : index + 1),
@@ -21,10 +22,9 @@ export const Carousel: React.FC<Props> = ({ images, size }) => {
   }, []);
   return images.length === 0 ? (<></>) : (
     <Image
+      {...imagesProps}
       src={images[index]}
-      size={size}
       objectFit="cover"
-      alt="Mission image"
     />
   );
 }

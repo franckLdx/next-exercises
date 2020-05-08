@@ -1,12 +1,14 @@
 import React, { useMemo } from "react";
 import { NextPage, NextPageContext } from "next";
 import Error from "next/error";
-import { Heading, Box, Text } from "@chakra-ui/core";
+import { Heading, Box } from "@chakra-ui/core";
 import { getLaunch, LaunchResult } from "../../services/launches";
 import { MyHead } from "../../components/MyHead";
-import Link from "next/link";
 import { getRocketUrl } from "../../lib/url";
 import { Carousel } from "../../components/Carousel";
+import { MyNextLink } from "../../components/MyNextLink";
+import { Description } from "../../components/launch/Description";
+import ReactPlayer from 'react-player'
 
 type Props =
   { launchResult: LaunchResult, statusCode: null } |
@@ -38,17 +40,26 @@ const Launch: NextPage<Props> = ({ launchResult, statusCode }) => {
   return <>
     <MyHead title={launchResult.mission_name} />
     <Heading as="h1" size="xl" display="flex">
-      <Link href={rocketUrl} >
-        <Text cursor="pointer">{launchResult.mission_name} -- A {launchResult.rocket.rocket_name} mission</Text>
-      </Link>
+      <MyNextLink href={rocketUrl} >
+        {launchResult.mission_name} -- A {launchResult.rocket.rocket_name} mission
+      </MyNextLink>
     </Heading>
-    <Carousel marginTop={"sm"} size={["2xl"]} images={launchResult.links.flickr_images} />
+    <Description launchResult={launchResult} marginBottom="10" />
+    <Carousel
+      marginBottom="10"
+      size={"2xl"}
+      images={launchResult.links.flickr_images}
+      alt="Mission images"
+    />
+    <Box size={"2xl"}>
+      <ReactPlayer
+        url={launchResult.links.video_link}
+        controls={true}
+        width="100%"
+        height="100%"
+      />
+    </Box>
   </>
 }
-//     <YouTubeReader
-//       class="ml-8 mb-10 border border-white"
-//       videoLink={launch.links.video_link} />
-//     <Ships class="ml-8" ships={launch.ships} /> */}
-
 
 export default Launch;

@@ -2,43 +2,41 @@ import React, { useMemo } from "react";
 import { LaunchResult } from "../../services/launches";
 import { MediaDescription } from "../MediaDescription";
 import { distanceDate } from "../../lib/misc";
-import { Box, Link } from "@chakra-ui/core";
+import { Box, Link, BoxProps } from "@chakra-ui/core";
 
-interface Props {
-  launch: LaunchResult
+type Props = BoxProps & {
+  launchResult: LaunchResult
 }
 
-export const Description: React.FC<Props> = ({ launch }) => {
+export const Description: React.FC<Props> = ({ launchResult, ...boxProps }) => {
   const distanceMsg = useMemo(
-    () => `${distanceDate(launch.launch_date_utc, Date.now())} ago from ${launch.launch_site.site_name_long}`,
-    [launch]
+    () => `${distanceDate(launchResult.launch_date_utc, Date.now())} ago from ${launchResult.launch_site.site_name_long}`,
+    [launchResult]
   );
   const details = useMemo(
     () => {
-      if (!launch.details) {
+      if (!launchResult.details) {
         return <>Sorry, description not yet provided !</>
       }
       return (
-        <>
-          {launch.details} (<Link href={launch.links.wikipedia} isExternal>Related wikipedia article</Link>,&nbsp;
-          <Link href={launch.links.video_link} isExternal>Related video article</Link>)
-        </>
+        <Box>
+          {launchResult.details} (<Link href={launchResult.links.wikipedia} isExternal>Related wikipedia article</Link>,&nbsp;
+          <Link href={launchResult.links.video_link} isExternal>Related video article</Link>)
+        </Box>
       );
     },
-    [launch]
+    [launchResult]
   );
   return (
     <MediaDescription
-      imgUrl={launch.links.mission_patch}
+      imgUrl={launchResult.links.mission_patch}
       altImg="mission patch logo">
-      <>
-        <Box marginBottom="5px">
-          {distanceMsg}
-        </Box>
-        <div>
-          {details}
-        </div>
-      </>
+      <Box marginBottom="5px">
+        {distanceMsg}
+      </Box>
+      <div>
+        {details}
+      </div>
     </MediaDescription>
   );
 };
