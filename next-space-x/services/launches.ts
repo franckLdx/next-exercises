@@ -91,7 +91,12 @@ query($id: ID!) {
   }
 }`;
 
-
+export interface LaunchResult_Ship {
+  id: number;
+  name: string;
+  model: string;
+  image: string;
+}
 export interface LaunchResult {
   id: string;
   mission_name: string;
@@ -113,12 +118,7 @@ export interface LaunchResult {
       id: number;
     }
   }
-  ships: {
-    id: number;
-    name: string;
-    model: string;
-    image: string;
-  }[]
+  ships: LaunchResult_Ship[]
 }
 
 export async function getLaunch(id: number): Promise<LaunchResult> {
