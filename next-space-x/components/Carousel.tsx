@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { Image, ImageProps } from "@chakra-ui/core";
 
-type ImagesProps = Exclude<ImageProps, 'src' | 'objectFit'>
+type ImagesProps = Omit<ImageProps, 'src' | 'objectFit'>
 type Props = ImagesProps & {
   images: string[];
 }

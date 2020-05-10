@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { NextPage, NextPageContext } from "next";
 import Error from "next/error";
-import { Heading, Box, Link, BoxProps, Image, Flex, FlexProps } from "@chakra-ui/core";
+import { Heading, Box, Link, Image, Flex, FlexProps } from "@chakra-ui/core";
 import { getLaunch, LaunchResult, LaunchResult_Ship } from "../../services/launches";
 import { MyHead } from "../../components/MyHead";
 import { getRocketUrl, getShipUrl } from "../../lib/url";
@@ -10,6 +10,7 @@ import { MyNextLink } from "../../components/MyNextLink";
 import { MediaDescription } from "../../components/MediaDescription";
 import { distanceDate } from "../../lib/misc";
 import { VideoPlayer } from "../../components/VideoPlayer";
+import StyledSystem from "styled-system";
 
 const separatorSize_xl = "10px";
 const separatorSize_sm = "5px";
@@ -36,7 +37,7 @@ export async function getServerSideProps(context: NextPageContext): Promise<{ pr
 }
 
 const Launch: NextPage<Props> = ({ launchResult, statusCode }) => {
-  if (statusCode) {
+  if (statusCode !== null) {
     return <Error statusCode={statusCode} />;
   }
   return <>
@@ -81,11 +82,11 @@ const Head: React.FC<HeadProps> = ({ launchResult }) => {
     </Heading>);
 }
 
-type DescriptionProps = BoxProps & {
+type DescriptionProps = StyledSystem.MarginProps & {
   launchResult: LaunchResult
 }
 
-const Description: React.FC<DescriptionProps> = ({ launchResult, ...boxProps }) => {
+const Description: React.FC<DescriptionProps> = ({ launchResult, ...props }) => {
   const distanceMsg = useMemo(
     () => `${distanceDate(launchResult.launch_date_utc, Date.now())} ago from ${launchResult.launch_site.site_name_long}`,
     [launchResult]
@@ -106,7 +107,7 @@ const Description: React.FC<DescriptionProps> = ({ launchResult, ...boxProps }) 
   );
   return (
     <MediaDescription
-      {...boxProps}
+      {...props}
       imgUrl={launchResult.links.mission_patch}
       altImg="mission patch logo">
       <Box marginBottom={separatorSize_sm}>
@@ -117,22 +118,22 @@ const Description: React.FC<DescriptionProps> = ({ launchResult, ...boxProps }) 
   );
 };
 
-type ShipsProps = {
+type ShipsProps = StyledSystem.MarginProps & {
   launchResult: LaunchResult
 }
-const Ships: React.FC<ShipsProps> = ({ launchResult }) => {
+const Ships: React.FC<ShipsProps> = ({ launchResult, ...props }) => {
   if (launchResult.ships.length === 0) {
-    return <></>;
+    return <Box />;
   }
   return (
-    <>
+    <Box {...props}>
       Ships involed by this mission:
       {launchResult.ships.map(ship => <Ship ship={ship} marginBottom={separatorSize_sm} />)}
-    </>
+    </Box>
   );
 }
 
-type ShipProps = Exclude<FlexProps, 'flexWrap' | 'direction' | 'alignItems' | 'justifyContent'> & {
+type ShipProps = Omit<FlexProps, 'display' | 'flexWrap' | 'direction' | 'alignItems' | 'justifyContent'> & {
   ship: LaunchResult_Ship;
 }
 const Ship: React.FC<ShipProps> = ({ ship: { id, image, name }, ...flexProps }) =>
