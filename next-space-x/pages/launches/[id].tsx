@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { NextPage, NextPageContext } from "next";
+import { NextPage, GetServerSideProps, GetServerSidePropsContext } from "next";
 import Error from "next/error";
 import { Heading, Box, Link, Image, Flex, FlexProps } from "@chakra-ui/core";
 import { getLaunch, LaunchResult, LaunchResult_Ship } from "../../services/launches";
@@ -21,7 +21,7 @@ type Props =
   { launchResult: LaunchResult, statusCode: null } |
   { launchResult: null, statusCode: number };
 
-export async function getServerSideProps(context: NextPageContext): Promise<{ props: Props }> {
+export const getServerSideProps: GetServerSideProps<Props> = async (context: GetServerSidePropsContext) => {
   const id = Number(context.query.id);
   if (isNaN(id)) {
     console.error("Bad parameters");
@@ -128,7 +128,12 @@ const Ships: React.FC<ShipsProps> = ({ launchResult, ...props }) => {
   return (
     <Box {...props}>
       Ships involed by this mission:
-      {launchResult.ships.map(ship => <Ship ship={ship} marginBottom={separatorSize_sm} />)}
+      {launchResult.ships.map(ship =>
+        <Ship
+          key={ship.id}
+          ship={ship}
+          marginBottom={separatorSize_sm}
+        />)}
     </Box>
   );
 }

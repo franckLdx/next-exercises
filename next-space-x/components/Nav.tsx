@@ -1,30 +1,18 @@
 import React from 'react';
-import Link from 'next/link'
 import { PseudoBox, Flex, Image } from '@chakra-ui/core';
 import { useRouter } from 'next/router';
-import styled from '@emotion/styled'
-import { space } from 'styled-system'
 import { getLaunchesUrl, getRocketsUrl, getShipsUrl } from '../lib/url';
+import { MyNextLink } from './MyNextLink';
+import StyledSystem from "styled-system";
 
-const StyledNav = styled.nav`
-  ${space}
-`;
-
-interface Props {
-  marginTop?: number;
-  marginBottom: number;
-
-}
-export const Nav: React.FunctionComponent<Props> = React.memo(
-  ({ marginTop, marginBottom }) => (
-    <StyledNav marginTop={marginTop} marginBottom={marginBottom}>
-      <Flex flexWrap={"wrap"}>
-        <Image height="25px" src="spacex_logo_white.png" alt="SpaceX logo" />
-        <NavItem href={getLaunchesUrl()} label="Launches" />
-        <NavItem href={getRocketsUrl()} label="Rockets" />
-        <NavItem href={getShipsUrl()} label="Ships" />
-      </Flex>
-    </StyledNav >
+export const Nav: React.FunctionComponent<StyledSystem.MarginProps> = React.memo(
+  ({ ...props }) => (
+    <Flex flexWrap={"wrap"} {...props}>
+      <Image height="25px" src="spacex_logo_white.png" alt="SpaceX logo" />
+      <NavItem href={getLaunchesUrl()} label="Launches" />
+      <NavItem href={getRocketsUrl()} label="Rockets" />
+      <NavItem href={getShipsUrl()} label="Ships" />
+    </Flex>
   )
 );
 
@@ -39,11 +27,9 @@ const NavItem: React.FC<NavItemProps> = React.memo(
     const borderBottom = router.pathname === href ? "4px solid" : undefined;
     return (
       <PseudoBox color="whiteAlpha.900" marginLeft={4} paddingBottom={1} borderBottom={borderBottom} _hover={{ color: "white" }}>
-        <Link href={href}>
-          <a>
-            {label}
-          </a>
-        </Link>
+        <MyNextLink href={href}>
+          {label}
+        </MyNextLink>
       </PseudoBox>
     );
   }

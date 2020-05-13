@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Progress } from '@chakra-ui/core';
-import Router from 'next/router'
+import { useRouter } from 'next/router';
 
 export const Loading: React.FC = React.memo(
   () => {
     const [refresh, setRefresh] = useState<number | undefined>(undefined);
     const [value, setValue] = useState(0);
     const [visibility, setVisibility] = useState<"visible" | "hidden">("hidden");
+    const router = useRouter();
 
     const startLoad = useCallback(() => {
       setVisibility("visible");
@@ -27,9 +28,9 @@ export const Loading: React.FC = React.memo(
 
     useEffect(
       () => {
-        Router.events.on('routeChangeStart', startLoad);
-        Router.events.on('routeChangeComplete', stopLoad);
-        Router.events.on('routeChangeError', stopLoad);
+        router.events.on('routeChangeStart', startLoad);
+        router.events.on('routeChangeComplete', stopLoad);
+        router.events.on('routeChangeError', stopLoad);
       },
       [startLoad, stopLoad]
     );

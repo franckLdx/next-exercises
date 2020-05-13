@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
-import { NextPage, NextPageContext } from 'next';
+import { NextPage, GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import Error from "next/error";
 import { SimpleGrid, PseudoBox, Heading } from '@chakra-ui/core';
@@ -24,7 +24,7 @@ type PageProps = {
   totalCount: number;
   activePage: number;
 }
-export async function getServerSideProps(context: NextPageContext): Promise<{ props: PageProps }> {
+export const getServerSideProps: GetServerSideProps<PageProps> = async (context: GetServerSidePropsContext) => {
   const activePage = Number(context.query.page);
   if (isNaN(activePage)) {
     console.error("Bad parameters");
@@ -72,17 +72,24 @@ interface LaunchProps {
 
 const Launch: React.FC<LaunchProps> = ({ launch }) => {
   const now = useMemo(() => Date.now(), []);
+  const hoverStyle = useMemo(
+    () => ({ border: "2px solid", borderColor: "white" }),
+    []
+  );
   return (
     <PseudoBox
-      border="1px solid" borderColor="whiteAlpha.900" padding={2}
-      _hover={{ border: "2px solid", borderColor: "white" }}>
+      border="1px solid"
+      borderColor="whiteAlpha.900"
+      padding={2}
+      _hover={hoverStyle}
+    >
       <article>
         <MyNextLink href={getLaunchUrl(launch.id)}>
           <Heading as="h1" size="md">{launch.mission_name} -- {launch.rocket.rocket_name}</Heading>
           {distanceDate(launch.launch_date_utc, now)} ago from {launch.launch_site.site_name_long}
           <Carousel marginTop={"sm"} size="sm" images={launch.links.flickr_images} />
         </MyNextLink>
-      </article>
+      </article >
     </PseudoBox >
   );
 };
@@ -94,10 +101,12 @@ const NavBar: React.FC<NavBarProps> = ({ totalCount, ...props }) => {
   const pagesCount = useMemo(() => Math.round(totalCount / pageSize), [totalCount]);
   const router = useRouter()
   const onPageClick = useCallback(
-    pageNumber => {
-      router.push(getLaunchesUrl(pageNumber));
-    },
+    (pageNumber: number) => router.push(getLaunchesUrl(pageNumber)),
     []
   );
-  return <NavPage {...props} pagesCount={pagesCount} onPageClick={onPageClick} />
+  return <NavPage
+    {...props}
+    pagesCount={pagesCount}
+    onPageClick={onPageClick}
+  />
 }
