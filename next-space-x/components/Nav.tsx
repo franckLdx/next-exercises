@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { PseudoBox, Flex, Image } from '@chakra-ui/core';
 import { useRouter } from 'next/router';
 import { getLaunchesUrl, getRocketsUrl, getShipsUrl } from '../lib/url';
@@ -21,10 +21,19 @@ interface NavItemProps {
   label: string;
 }
 
+const getBaseUrl = (url: string) => url.replace(/\?.*/g, '').toLowerCase()
+
 const NavItem: React.FC<NavItemProps> = React.memo(
   ({ href, label }) => {
     const router = useRouter();
-    const borderBottom = router.pathname === href ? "4px solid" : undefined;
+    const borderBottom = useMemo(
+      () => {
+        const baseHref = getBaseUrl(href);
+        const baseCurrent = getBaseUrl(router.pathname);
+        return baseCurrent === baseHref ? "4px solid" : undefined
+      },
+      [router.pathname, href]
+    );
     return (
       <PseudoBox color="whiteAlpha.900" marginLeft={4} paddingBottom={1} borderBottom={borderBottom} _hover={{ color: "white" }}>
         <MyNextLink href={href}>
