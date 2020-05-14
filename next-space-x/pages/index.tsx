@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router'
-import { getLaunchesUrl } from '../lib/url';
 import { Text } from "@chakra-ui/core/";
+import { getLaunchesUrl } from '@lib/url';
 
 const Home: React.FC = () => {
   const router = useRouter()

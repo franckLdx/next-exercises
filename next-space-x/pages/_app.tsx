@@ -1,11 +1,11 @@
 import React from 'react';
 import { AppProps } from 'next/app'
-import { Nav } from '../components/Nav'
 import { ThemeProvider, CSSReset, ColorModeProvider, Divider, PseudoBox, Box } from "@chakra-ui/core";
-import { customTheme } from '../components/_theme'
-import { Loading } from '../components/Loading';
-import { SetColorTheme } from '../components/SetColorTheme';
-import { useCursor } from '../lib/useCursor';
+import { useCursor } from '@lib/useCursor';
+import { customTheme } from '@components/_theme';
+import { SetColorTheme } from '@components/SetColorTheme';
+import { Nav } from '@components/Nav';
+import { Loading } from '@components/Loading';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [cursor, _] = useCursor("pointer");

@@ -3,13 +3,13 @@ import { NextPage, GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import Error from "next/error";
 import { SimpleGrid, PseudoBox, Heading } from '@chakra-ui/core';
-import { getLaunches, LaunchItemResult } from '../../services/launches';
-import { MyHead } from '../../components/MyHead';
-import { getLaunchUrl, getLaunchesUrl } from '../../lib/url';
-import { distanceDate } from '../../lib/misc';
-import { Carousel } from '../../components/Carousel';
-import { MyNextLink } from '../../components/MyNextLink';
-import { NavPage, NavPageProps } from '../../components/NavPage';
+import { LaunchItemResult, getLaunches } from '@services/launches';
+import { MyHead } from '@components/MyHead';
+import { MyNextLink } from '@components/MyNextLink';
+import { Carousel } from '@components/Carousel';
+import { NavPageProps, NavPage } from '@components/NavPage';
+import { getLaunchUrl, getLaunchesUrl } from '@lib/url';
+import { distanceDate } from '@lib/misc';
 
 const pageSize = 9;
 
