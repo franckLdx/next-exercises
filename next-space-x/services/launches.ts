@@ -115,7 +115,7 @@ export interface LaunchResult {
     rocket_name: string;
     rocket_type: string;
     rocket: {
-      id: number;
+      id: string;
     }
   }
   ships: LaunchResult_Ship[]

@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { ButtonGroup, Button, Flex } from "@chakra-ui/core";
 import StyledSystem from "styled-system";
-import { useCursor } from "../lib/useCursor";
+import { useCursor } from "@lib/useCursor";
 
 export type NavPageProps = StyledSystem.MarginProps & {
   pagesCount: number;

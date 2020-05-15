@@ -7,9 +7,9 @@ import { LaunchItemResult, getLaunches } from '@services/launches';
 import { MyHead } from '@components/MyHead';
 import { MyNextLink } from '@components/MyNextLink';
 import { Carousel } from '@components/Carousel';
-import { NavPageProps, NavPage } from '@components/NavPage';
 import { getLaunchUrl, getLaunchesUrl } from '@lib/url';
 import { distanceDate } from '@lib/misc';
+import { NavPage, NavPageProps } from '@navigation/NavPage';
 
 const pageSize = 9;
 

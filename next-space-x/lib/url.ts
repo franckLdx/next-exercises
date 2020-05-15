@@ -9,7 +9,7 @@ export const getLaunchUrl = (launchId: string) => `${launchesSegment}/${launchId
 
 export const getRocketsUrl = () => rocketsSegment;
 
-export const getRocketUrl = (rocketId: number) => `${rocketsSegment}/${rocketId}`;
+export const getRocketUrl = (rocketId: string) => `${rocketsSegment}/${rocketId}`;
 
 export const getShipsUrl = (pageNumber = 1) => `${shipsSegment}?${getPageNumber(pageNumber)}`;
 

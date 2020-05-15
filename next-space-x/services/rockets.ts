@@ -1,27 +1,34 @@
 import { gql } from 'apollo-boost';
 import { client } from "./client";
 
+export interface RocketResult {
+  id: string;
+  name: string;
+}
+export type RocketResults = Array<RocketResult>;
+
 const GET_ROCKETS = gql`{
   rockets(limit: 1000) {
     id, name
   }
 }`;
 
-export async function getRockets() {
+interface NamedRocket { name: string }
+const sortByName = (rocket1: NamedRocket, rocket2: NamedRocket) => {
+  if (rocket1.name < rocket2.name) {
+    return -1
+  }
+  if (rocket1.name > rocket2.name) {
+    return 1
+  }
+  return 0
+};
+
+export async function getRockets(): Promise<RocketResults> {
   const response = await client.query({
     query: GET_ROCKETS,
   });
-  const rockets = response.data.rockets.sort(
-    (rocket1, rocket2) => {
-      if (rocket1.name < rocket2.name) {
-        return -1
-      }
-      if (rocket1.name > rocket2.name) {
-        return 1
-      }
-      return 0
-    }
-  );
+  const rockets: RocketResults = response.data.rockets.sort(sortByName);
   return rockets;
 }
 

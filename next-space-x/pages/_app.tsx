@@ -4,8 +4,8 @@ import { ThemeProvider, CSSReset, ColorModeProvider, Divider, PseudoBox, Box } f
 import { useCursor } from '@lib/useCursor';
 import { customTheme } from '@components/_theme';
 import { SetColorTheme } from '@components/SetColorTheme';
-import { Nav } from '@components/Nav';
 import { Loading } from '@components/Loading';
+import { AppNavBar } from '@components/app/NavBar';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [cursor, _] = useCursor("pointer");
@@ -15,7 +15,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <CSSReset />
         <SetColorTheme color="dark" />
         <Box marginTop={4} paddingBottom={1} marginBottom={2} borderBottom="2px solid white">
-          <Nav marginBottom={2} />
+          <AppNavBar marginBottom={2} />
           <Loading />
         </Box>
         <Box cursor={cursor}>
