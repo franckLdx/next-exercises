@@ -3,7 +3,7 @@ import { NextPage, GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import Error from "next/error";
 import { SimpleGrid, PseudoBox, Heading } from '@chakra-ui/core';
-import { LaunchItemResult, getLaunches } from '@services/launches';
+import { LaunchItem, getLaunches } from '@services/launches';
 import { MyHead } from '@components/MyHead';
 import { MyNextLink } from '@components/MyNextLink';
 import { Carousel } from '@components/Carousel';
@@ -20,7 +20,7 @@ type PageProps = {
   activePage: null,
 } | {
   statusCode: null;
-  launches: LaunchItemResult[];
+  launches: LaunchItem[];
   totalCount: number;
   activePage: number;
 }
@@ -67,7 +67,7 @@ const Launches: NextPage<PageProps> = ({ launches, activePage, totalCount, statu
 export default Launches;
 
 interface LaunchProps {
-  launch: LaunchItemResult;
+  launch: LaunchItem;
 }
 
 const Launch: React.FC<LaunchProps> = ({ launch }) => {

@@ -3,7 +3,7 @@ import { NextPage, GetServerSideProps, GetServerSidePropsContext } from "next";
 import Error from "next/error";
 import { Heading, Box, Link, Image, Flex, FlexProps } from "@chakra-ui/core";
 import StyledSystem from "styled-system";
-import { LaunchResult, getLaunch, LaunchResult_Ship } from "@services/launches";
+import { LaunchDetail, getLaunch, LaunchDetail_Ship } from "@services/launches";
 import { MyHead } from "@components/MyHead";
 import { Carousel } from "@components/Carousel";
 import { VideoPlayer } from "@components/VideoPlayer";
@@ -18,7 +18,7 @@ const separatorSize_sm = "5px";
 const imageSize = "2xl";
 
 type Props =
-  { launchResult: LaunchResult, statusCode: null } |
+  { launchResult: LaunchDetail, statusCode: null } |
   { launchResult: null, statusCode: number };
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context: GetServerSidePropsContext) => {
@@ -67,7 +67,7 @@ const Launch: NextPage<Props> = ({ launchResult, statusCode }) => {
 export default Launch;
 
 interface HeadProps {
-  launchResult: LaunchResult
+  launchResult: LaunchDetail
 }
 const Head: React.FC<HeadProps> = ({ launchResult }) => {
   const rocketUrl = useMemo(
@@ -83,7 +83,7 @@ const Head: React.FC<HeadProps> = ({ launchResult }) => {
 }
 
 type DescriptionProps = StyledSystem.MarginProps & {
-  launchResult: LaunchResult
+  launchResult: LaunchDetail
 }
 
 const Description: React.FC<DescriptionProps> = ({ launchResult, ...props }) => {
@@ -119,7 +119,7 @@ const Description: React.FC<DescriptionProps> = ({ launchResult, ...props }) => 
 };
 
 type ShipsProps = StyledSystem.MarginProps & {
-  launchResult: LaunchResult
+  launchResult: LaunchDetail
 }
 const Ships: React.FC<ShipsProps> = ({ launchResult, ...props }) => {
   if (launchResult.ships.length === 0) {
@@ -139,7 +139,7 @@ const Ships: React.FC<ShipsProps> = ({ launchResult, ...props }) => {
 }
 
 type ShipProps = Omit<FlexProps, 'display' | 'flexWrap' | 'direction' | 'alignItems' | 'justifyContent'> & {
-  ship: LaunchResult_Ship;
+  ship: LaunchDetail_Ship;
 }
 const Ship: React.FC<ShipProps> = ({ ship: { id, image, name }, ...flexProps }) =>
   <MyNextLink href={getShipUrl(id)}>

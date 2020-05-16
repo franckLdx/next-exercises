@@ -24,7 +24,7 @@ query($limit: Int!, $offset: Int!) {
   }
 }`;
 
-export interface LaunchItemResult {
+export interface LaunchItem {
   id: string;
   mission_name: string;
   launch_date_utc: string;
@@ -39,12 +39,12 @@ export interface LaunchItemResult {
   }
 }
 
-export interface LaunchesResult {
-  launches: LaunchItemResult[];
+export interface LaunchesList {
+  launches: LaunchItem[];
   totalCount: number;
 }
 
-export async function getLaunches(pageNumber: number, pageSize: number): Promise<LaunchesResult> {
+export async function getLaunches(pageNumber: number, pageSize: number): Promise<LaunchesList> {
   const limit = pageSize;
   const offset = (pageNumber - 1) * pageSize;
   const response = await client.query({
@@ -91,13 +91,13 @@ query($id: ID!) {
   }
 }`;
 
-export interface LaunchResult_Ship {
+export interface LaunchDetail_Ship {
   id: number;
   name: string;
   model: string;
   image: string;
 }
-export interface LaunchResult {
+export interface LaunchDetail {
   id: string;
   mission_name: string;
   details: string;
@@ -118,10 +118,10 @@ export interface LaunchResult {
       id: string;
     }
   }
-  ships: LaunchResult_Ship[]
+  ships: LaunchDetail_Ship[]
 }
 
-export async function getLaunch(id: number): Promise<LaunchResult> {
+export async function getLaunch(id: number): Promise<LaunchDetail> {
   const response = await client.query({
     query: GET_LAUNCH,
     variables: { id }

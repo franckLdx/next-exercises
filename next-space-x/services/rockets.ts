@@ -1,11 +1,12 @@
 import { gql } from 'apollo-boost';
 import { client } from "./client";
+import { number } from 'prop-types';
 
-export interface RocketResult {
+export interface RocketItem {
   id: string;
   name: string;
 }
-export type RocketResults = Array<RocketResult>;
+export type RocketsList = Array<RocketItem>;
 
 const GET_ROCKETS = gql`{
   rockets(limit: 1000) {
@@ -24,12 +25,45 @@ const sortByName = (rocket1: NamedRocket, rocket2: NamedRocket) => {
   return 0
 };
 
-export async function getRockets(): Promise<RocketResults> {
+export async function getRockets(): Promise<RocketsList> {
   const response = await client.query({
     query: GET_ROCKETS,
   });
-  const rockets: RocketResults = response.data.rockets.sort(sortByName);
+  const rockets: RocketsList = response.data.rockets.sort(sortByName);
   return rockets;
+}
+
+export interface RocketDetail {
+  id: string;
+  name: string;
+  description: string;
+  wikipedia: string;
+  cost_per_launch,
+  diameter: { meters: number },
+  height: { meters: number },
+  mass: { kg: string },
+  payload_weights: { id: string, name: string, kg: number },
+  success_rate_pct: number,
+  first_stage: {
+    burn_time_sec: number,
+    engines: number,
+    fuel_amount_tons: number,
+    reusable: boolean,
+    thrust_sea_level: {
+      kN: number
+    },
+    thrust_vacuum: {
+      kN: number
+    },
+  },
+  second_stage: {
+    engines: number,
+    burn_time_sec: number,
+    fuel_amount_tons: number,
+    thrust: {
+      kN: number
+    }
+  }
 }
 
 const GET_ROCKET = gql`
@@ -64,7 +98,7 @@ query($id: ID!) {
     }
   }
 }`;
-export async function getRocket(id: string) {
+export async function getRocket(id: string): Promise<RocketDetail> {
   const response = await client.query({
     query: GET_ROCKET,
     variables: { id }
