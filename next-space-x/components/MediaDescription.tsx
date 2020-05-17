@@ -1,13 +1,14 @@
 import React from "react";
 import { Box, Image } from "@chakra-ui/core";
+import StyledSystem from "styled-system";
 
-interface Props {
+type Props = StyledSystem.MarginProps & {
   imgUrl: string;
   altImg: string;
 }
 
-export const MediaDescription: React.FC<Props> = ({ imgUrl, altImg, children }) => (
-  <Box p={4} display="flex">
+export const MediaDescription: React.FC<Props> = ({ imgUrl, altImg, children, ...props }) => (
+  <Box {...props} p={4} display="flex">
     {imgUrl && <Image
       rounded="lg"
       width={{ base: 20, md: 40 }}

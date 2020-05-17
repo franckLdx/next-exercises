@@ -42,7 +42,7 @@ export interface RocketDetail {
   diameter: { meters: number },
   height: { meters: number },
   mass: { kg: string },
-  payload_weights: { id: string, name: string, kg: number },
+  payload_weights: Array<{ id: string, name: string, kg: number }>,
   success_rate_pct: number,
   first_stage: {
     burn_time_sec: number,
