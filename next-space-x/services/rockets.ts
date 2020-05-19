@@ -33,6 +33,18 @@ export async function getRockets(): Promise<RocketsList> {
   return rockets;
 }
 
+export interface RocketDetail_FirstStage {
+  burn_time_sec: number,
+  engines: number,
+  fuel_amount_tons: number,
+  reusable: boolean,
+  thrust_sea_level: {
+    kN: number
+  },
+  thrust_vacuum: {
+    kN: number
+  },
+}
 export interface RocketDetail {
   id: string;
   name: string;

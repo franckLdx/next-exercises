@@ -1,12 +1,12 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { GetStaticProps, GetStaticPropsContext, GetStaticPaths } from "next";
 import NextError from "next/error";
 import { getRockets, RocketsList, getRocket, RocketDetail } from "@services/rockets";
 import { NavRockets } from "@components/rockets/RocketNavBar";
-import { Heading, Link, Text, SimpleGrid, Stack, Box, StatNumber, StatLabel, Stat } from "@chakra-ui/core";
-import { MediaDescription } from "@components/MediaDescription";
-import { getRocketsImage } from "@lib/url";
-import StyledSystem from "styled-system";
+import { Heading } from "@chakra-ui/core";
+import { FirstStage } from "@components/rockets/FirstStage";
+import { Description } from "./Description";
+import { Payload } from "@components/rockets/Payload";
 
 type UrlParams = { id: string }
 
@@ -53,9 +53,9 @@ const Rockets: React.FC<PageProps> = ({ rockets, rocket }) => {
       </Heading>
       <Description rocket={rocket} />
       <Payload rocket={rocket} />
+      <FirstStage firstStage={rocket.first_stage} />
 
       {/* 
-      <FirstStage {rocket} />
       <SecondStage {rocket} />
       <Launches {launches} /> */}
 
@@ -64,54 +64,3 @@ const Rockets: React.FC<PageProps> = ({ rockets, rocket }) => {
 }
 
 export default Rockets;
-
-const Seprarator: React.FC = ({ children }) =>
-  <Heading
-    as="h2"
-    size="xl"
-    borderTop="2px solid white"
-    marginTop="3"
-  >
-    {children}
-  </Heading>
-
-interface SubComponentProps {
-  rocket: RocketDetail;
-}
-
-const Description: React.FC<SubComponentProps> = ({ rocket }) => {
-  const imageUrl = useMemo(() => getRocketsImage(rocket.id), []);
-  return (
-    <MediaDescription imgUrl={imageUrl} altImg="A rocket image">
-      <Text marginBottom='4'>
-        {rocket.description}
-      </Text>
-      <Text marginBottom='4'>
-        A launch costs {rocket.cost_per_launch}${rocket.success_rate_pct > 0 ? <> and the success rate is around {rocket.success_rate_pct}%</> : ""}
-      </Text>
-      <Text marginBottom='4'>
-        It has a height of {rocket.height.meters}m and a diameter of {rocket.diameter.meters}m
-      for a mass of {rocket.mass.kg}kg.
-    </Text>
-      <Link href={rocket.wikipedia}>Related wikipedia article</Link>
-    </MediaDescription>
-  );
-}
-
-const Payload: React.FC<SubComponentProps> = ({ rocket }) => {
-  return (
-    <>
-      <Seprarator>Payload</Seprarator>
-      <SimpleGrid marginTop="3" columns={{ sm: 2, md: 2, lg: 3, xl: 4 }} spacing={2} maxWidth="1500px">
-        {rocket.payload_weights.map(
-          payload => (
-            <Stat key={payload.id}>
-              <StatLabel>{payload.name}</StatLabel>
-              <StatNumber >{payload.kg} kg</StatNumber>
-            </Stat>)
-        )}
-      </SimpleGrid>
-    </>
-  );
-}
-
