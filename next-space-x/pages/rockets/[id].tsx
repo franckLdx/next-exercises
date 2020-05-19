@@ -2,12 +2,14 @@ import React from "react";
 import { GetStaticProps, GetStaticPropsContext, GetStaticPaths } from "next";
 import NextError from "next/error";
 import { getRockets, RocketsList, getRocket, RocketDetail } from "@services/rockets";
-import { NavRockets } from "@components/rockets/RocketNavBar";
-import { Heading } from "@chakra-ui/core";
-import { FirstStage } from "@components/rockets/FirstStage";
-import { Description } from "../../components/rockets/Description";
-import { Payload } from "@components/rockets/Payload";
-import { SecondStage } from "@components/rockets/SecondStage";
+import { getRocketLaunches, LaunchRocketResult } from "@services/launches";
+import Heading from "@chakra-ui/core/dist/Heading";
+import { Description } from "@rocket/Description";
+import { NavRockets } from "@rocket/RocketNavBar";
+import { Payload } from "@rocket/Payload";
+import { FirstStage } from "@rocket/FirstStage";
+import { SecondStage } from "@rocket/SecondStage";
+import { Launches } from "@rocket/Launches";
 
 type UrlParams = { id: string }
 
@@ -26,23 +28,27 @@ export const getStaticPaths: GetStaticPaths<UrlParams> = async () => {
 interface PageProps {
   rockets: RocketsList
   rocket: RocketDetail;
+  launches: Array<LaunchRocketResult>
 }
 
 export const getStaticProps: GetStaticProps<PageProps> = async ({ params }: GetStaticPropsContext<UrlParams>) => {
   if (!params.id) {
     throw new Error("Wrong id parameters");
   }
-  const [rockets, rocket] = await Promise.all([
+  const [rockets, rocket, launches] = await Promise.all([
     getRockets(),
-    getRocket(params.id)
+    getRocket(params.id),
+    getRocketLaunches(params.id)
   ]);
-  if (!rockets || !rockets.length || !rocket) {
-    throw new Error("Unable to get rockets");
+  if (!rockets || !rockets.length || !rocket || !launches) {
+    throw new Error("Unable to get rockets data");
   }
-  return { props: { rockets, rocket } };
+  return { props: { rockets, rocket, launches } };
 }
 
-const Rockets: React.FC<PageProps> = ({ rockets, rocket }) => {
+const margin = "10";
+
+const Rockets: React.FC<PageProps> = ({ rockets, rocket, launches }) => {
   if (!rockets || !rockets.length) {
     return <NextError statusCode={500} />;
   }
@@ -54,12 +60,9 @@ const Rockets: React.FC<PageProps> = ({ rockets, rocket }) => {
       </Heading>
       <Description rocket={rocket} />
       <Payload rocket={rocket} />
-      <FirstStage firstStage={rocket.first_stage} />
-      <SecondStage secondStage={rocket.second_stage} />
-
-      {/* 
-      <Launches {launches} /> */}
-
+      <FirstStage marginTop={margin} firstStage={rocket.first_stage} />
+      <SecondStage marginTop={margin} secondStage={rocket.second_stage} />
+      <Launches marginTop={margin} launches={launches} />
     </>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { GetStaticProps, GetStaticPropsContext } from "next";
 import { getRockets, RocketsList } from "@services/rockets";
-import { NavRockets } from "@components/rockets/RocketNavBar";
+import { NavRockets } from "@components/rocket/RocketNavBar";
 import { useRedirect } from "@lib/useRedirect";
 import { getRocketUrl } from "@lib/url";
 import { Loading } from "@components/Loading";

@@ -1,13 +1,13 @@
 import React, { useMemo } from "react";
-import { SubComponentProps } from "@components/rockets/subComponents";
+import { SubComponentProps } from "@components/rocket/subComponents";
 import { getRocketsImage } from "@lib/url";
 import { MediaDescription } from "@components/MediaDescription";
-import { Link, Text } from "@chakra-ui/core";
+import { Text, Link } from "@chakra-ui/core";
 
-export const Description: React.FC<SubComponentProps> = ({ rocket }) => {
+export const Description: React.FC<SubComponentProps> = ({ rocket, ...props }) => {
   const imageUrl = useMemo(() => getRocketsImage(rocket.id), []);
   return (
-    <MediaDescription imgUrl={imageUrl} altImg="A rocket image">
+    <MediaDescription {...props} imgUrl={imageUrl} altImg="A rocket image">
       <Text marginBottom='4'>
         {rocket.description}
       </Text>

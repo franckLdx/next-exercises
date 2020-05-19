@@ -12,6 +12,9 @@
       "@components/*": [
         "components/*"
       ],
+      "@rocket/*": [
+        "components/rocket/*"
+      ],
       "@lib/*": [
         "lib/*"
       ]

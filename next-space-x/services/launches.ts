@@ -1,5 +1,7 @@
 import { gql } from "apollo-boost";
 import { client } from "./client";
+import { sortByLaunchDate } from "@lib/misc";
+import { string } from "prop-types";
 
 const LAST_LAUNCHES = gql`
 query($limit: Int!, $offset: Int!) {
@@ -130,4 +132,27 @@ export async function getLaunch(id: number): Promise<LaunchDetail> {
 }
 
 
+export interface LaunchRocketResult {
+  id: string
+  launch_date_utc: string
+  mission_name: string
+}
 
+const GET_ROCKET_LAUNCHES = gql`
+query ($rocketId: String!) {
+  launches(find: {rocket_id: $rocketId}, order:"launch_date_utc", sort:"desc") {
+    id
+    launch_date_utc
+    mission_name
+  }
+}`;
+
+export async function getRocketLaunches(rocketId: string): Promise<Array<LaunchRocketResult>> {
+  const response = await client.query({
+    query: GET_ROCKET_LAUNCHES,
+    variables: { rocketId }
+  });
+  return response.data.launches.sort(
+    sortByLaunchDate
+  ) as Array<LaunchRocketResult>;
+}

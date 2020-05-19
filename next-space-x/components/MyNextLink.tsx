@@ -7,7 +7,7 @@ export const MyNextLink: React.FC<LinkProps> = ({ children, ...linkProps }) => {
   const [cursor, _] = useCursor("pointer");
   return (
     <Link {...linkProps}>
-      <Box cursor={cursor}>
+      <Box as="span" cursor={cursor}>
         {children}
       </Box>
     </Link>)

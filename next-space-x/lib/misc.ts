@@ -13,3 +13,16 @@ export function formatDate(dateStr) {
 
 const getDate = (dateStr: string) => parseISO(dateStr);
 
+interface LaunchDate {
+  launch_date_utc: string
+}
+
+export function sortByLaunchDate<T extends LaunchDate>(data1: T, data2: T) {
+  if (data1.launch_date_utc < data2.launch_date_utc) {
+    return 1;
+  } else if (data1.launch_date_utc > data2.launch_date_utc) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
