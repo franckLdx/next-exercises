@@ -5,8 +5,9 @@ import { getRockets, RocketsList, getRocket, RocketDetail } from "@services/rock
 import { NavRockets } from "@components/rockets/RocketNavBar";
 import { Heading } from "@chakra-ui/core";
 import { FirstStage } from "@components/rockets/FirstStage";
-import { Description } from "./Description";
+import { Description } from "../../components/rockets/Description";
 import { Payload } from "@components/rockets/Payload";
+import { SecondStage } from "@components/rockets/SecondStage";
 
 type UrlParams = { id: string }
 
@@ -54,9 +55,9 @@ const Rockets: React.FC<PageProps> = ({ rockets, rocket }) => {
       <Description rocket={rocket} />
       <Payload rocket={rocket} />
       <FirstStage firstStage={rocket.first_stage} />
+      <SecondStage secondStage={rocket.second_stage} />
 
       {/* 
-      <SecondStage {rocket} />
       <Launches {launches} /> */}
 
     </>

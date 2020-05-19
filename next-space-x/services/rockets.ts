@@ -45,6 +45,14 @@ export interface RocketDetail_FirstStage {
     kN: number
   },
 }
+export interface RocketDetail_SecondStage {
+  engines: number,
+  burn_time_sec: number,
+  fuel_amount_tons: number,
+  thrust: {
+    kN: number
+  }
+}
 export interface RocketDetail {
   id: string;
   name: string;
@@ -56,26 +64,8 @@ export interface RocketDetail {
   mass: { kg: string },
   payload_weights: Array<{ id: string, name: string, kg: number }>,
   success_rate_pct: number,
-  first_stage: {
-    burn_time_sec: number,
-    engines: number,
-    fuel_amount_tons: number,
-    reusable: boolean,
-    thrust_sea_level: {
-      kN: number
-    },
-    thrust_vacuum: {
-      kN: number
-    },
-  },
-  second_stage: {
-    engines: number,
-    burn_time_sec: number,
-    fuel_amount_tons: number,
-    thrust: {
-      kN: number
-    }
-  }
+  first_stage: RocketDetail_FirstStage,
+  second_stage: RocketDetail_SecondStage
 }
 
 const GET_ROCKET = gql`
