@@ -1,11 +1,8 @@
 import React from "react";
-import { GetStaticProps, GetStaticPropsContext } from "next";
+import { GetStaticProps } from "next";
 import { getRockets, RocketsList } from "@services/rockets";
-import { NavRockets } from "@components/rocket/RocketNavBar";
 import { useRedirect } from "@lib/useRedirect";
 import { getRocketUrl } from "@lib/url";
-import { Loading } from "@components/Loading";
-import { watchFile } from "fs";
 
 interface PageProps {
   rockets: RocketsList

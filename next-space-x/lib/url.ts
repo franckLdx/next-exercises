@@ -11,9 +11,9 @@ export const getRocketsUrl = () => rocketsSegment;
 
 export const getRocketUrl = (rocketId: string) => `${rocketsSegment}/${rocketId}`;
 
-export const getShipsUrl = (pageNumber = 1) => `${shipsSegment}?${getPageNumber(pageNumber)}`;
+export const getShipsUrl = (pageNumber = 1) => `${shipsSegment}/pages/${pageNumber}`;
 
-export const getShipUrl = (shipId: number) => `${shipsSegment}/${shipId}`;
+export const getShipUrl = (shipId: string) => `${shipsSegment}/${shipId}`;
 
 export const getAboutUrl = () => aboutSegment;
 

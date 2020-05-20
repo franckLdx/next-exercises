@@ -94,7 +94,7 @@ query($id: ID!) {
 }`;
 
 export interface LaunchDetail_Ship {
-  id: number;
+  id: string;
   name: string;
   model: string;
   image: string;

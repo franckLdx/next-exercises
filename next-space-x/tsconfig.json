@@ -12,8 +12,14 @@
       "@components/*": [
         "components/*"
       ],
+      "@launches/*": [
+        "components/launches/*"
+      ],
       "@rocket/*": [
         "components/rocket/*"
+      ],
+      "@ships/*": [
+        "components/ships/*"
       ],
       "@lib/*": [
         "lib/*"

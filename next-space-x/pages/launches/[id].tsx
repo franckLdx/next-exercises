@@ -7,10 +7,10 @@ import { LaunchDetail, getLaunch, LaunchDetail_Ship } from "@services/launches";
 import { MyHead } from "@components/MyHead";
 import { Carousel } from "@components/Carousel";
 import { VideoPlayer } from "@components/VideoPlayer";
-import { getRocketUrl, getShipUrl } from "@lib/url";
 import { MyNextLink } from "@components/MyNextLink";
-import { distanceDate } from "@lib/misc";
 import { MediaDescription } from "@components/MediaDescription";
+import { getRocketUrl, getShipUrl } from "@lib/url";
+import { distanceDate } from "@lib/misc";
 
 const separatorSize_xl = "10px";
 const separatorSize_sm = "5px";

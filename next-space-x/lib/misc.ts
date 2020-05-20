@@ -26,3 +26,7 @@ export function sortByLaunchDate<T extends LaunchDate>(data1: T, data2: T) {
     return 1;
   }
 }
+
+export function getPagesCount(itemsCounts: number, itemPerPage: number) {
+  return Math.ceil(itemsCounts / itemPerPage);
+}

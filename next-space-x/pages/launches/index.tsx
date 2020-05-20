@@ -1,27 +1,24 @@
-import React, { useMemo, useCallback } from 'react';
+import React from 'react';
 import { NextPage, GetServerSideProps, GetServerSidePropsContext } from 'next';
-import { useRouter } from 'next/router';
 import Error from "next/error";
-import { SimpleGrid, PseudoBox, Heading } from '@chakra-ui/core';
+import { SimpleGrid } from '@chakra-ui/core';
 import { LaunchItem, getLaunches } from '@services/launches';
 import { MyHead } from '@components/MyHead';
-import { MyNextLink } from '@components/MyNextLink';
-import { Carousel } from '@components/Carousel';
-import { getLaunchUrl, getLaunchesUrl } from '@lib/url';
-import { distanceDate } from '@lib/misc';
-import { NavPage, NavPageProps } from '@navigation/NavPage';
+import { LaunchNavBar } from '@launches/LaunchesNavBar';
+import { Launch } from '@components/launches/Launch';
+import { getPagesCount } from '@lib/misc';
 
-const pageSize = 9;
+const itemsPerPage = 9;
 
 type PageProps = {
   statusCode: number,
   launches: null,
-  totalCount: null,
+  pagesCount: null,
   activePage: null,
 } | {
   statusCode: null;
   launches: LaunchItem[];
-  totalCount: number;
+  pagesCount: number;
   activePage: number;
 }
 export const getServerSideProps: GetServerSideProps<PageProps> = async (context: GetServerSidePropsContext) => {
@@ -32,23 +29,23 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (context:
       props: {
         statusCode: 400,
         launches: null,
-        totalCount: null,
+        pagesCount: null,
         activePage: null
       }
     };
   }
-  const LaunchesResult = await getLaunches(activePage, pageSize);
+  const LaunchesResult = await getLaunches(activePage, itemsPerPage);
   return {
     props: {
       launches: LaunchesResult.launches,
-      totalCount: LaunchesResult.totalCount,
+      pagesCount: getPagesCount(LaunchesResult.totalCount, itemsPerPage),
       activePage,
       statusCode: null,
     }
   };
 }
 
-const Launches: NextPage<PageProps> = ({ launches, activePage, totalCount, statusCode }) => {
+const Launches: NextPage<PageProps> = ({ launches, activePage, pagesCount, statusCode }) => {
   if (statusCode !== null) {
     return <Error statusCode={statusCode} />;
   }
@@ -60,53 +57,9 @@ const Launches: NextPage<PageProps> = ({ launches, activePage, totalCount, statu
           {launches.map(launch => <Launch key={launch.id} launch={launch} />)}
         </SimpleGrid>
       </section>
-      <NavBar marginY={3} activePage={activePage} totalCount={totalCount} />
+      <LaunchNavBar activePage={activePage} pagesCount={pagesCount} />
     </>
   );
 }
+
 export default Launches;
-
-interface LaunchProps {
-  launch: LaunchItem;
-}
-
-const Launch: React.FC<LaunchProps> = ({ launch }) => {
-  const now = useMemo(() => Date.now(), []);
-  const hoverStyle = useMemo(
-    () => ({ border: "2px solid", borderColor: "white" }),
-    []
-  );
-  return (
-    <PseudoBox
-      border="1px solid"
-      borderColor="whiteAlpha.900"
-      padding={2}
-      _hover={hoverStyle}
-    >
-      <article>
-        <MyNextLink href={getLaunchUrl(launch.id)}>
-          <Heading as="h1" size="md">{launch.mission_name} -- {launch.rocket.rocket_name}</Heading>
-          {distanceDate(launch.launch_date_utc, now)} ago from {launch.launch_site.site_name_long}
-          <Carousel marginTop={"sm"} size="sm" images={launch.links.flickr_images} />
-        </MyNextLink>
-      </article >
-    </PseudoBox >
-  );
-};
-
-type NavBarProps = Omit<NavPageProps, 'pagesCount' | 'onPageClick'> & {
-  totalCount: number;
-}
-const NavBar: React.FC<NavBarProps> = ({ totalCount, ...props }) => {
-  const pagesCount = useMemo(() => Math.round(totalCount / pageSize), [totalCount]);
-  const router = useRouter()
-  const onPageClick = useCallback(
-    (pageNumber: number) => router.push(getLaunchesUrl(pageNumber)),
-    []
-  );
-  return <NavPage
-    {...props}
-    pagesCount={pagesCount}
-    onPageClick={onPageClick}
-  />
-}

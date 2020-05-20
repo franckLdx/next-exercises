@@ -13,17 +13,21 @@ export const NavPage: React.FC<NavPageProps> = React.memo(({ pagesCount, activeP
     () => Array.from(Array(pagesCount).keys()),
     [pagesCount]
   );
+  const onClicks = useMemo(
+    () => pages.map(i => () => onPageClick(i + 1)),
+    [pagesCount]
+  );
   const [cursor, _] = useCursor("pointer");
   return (
     <Flex flexWrap="wrap" justify="center" {...props}>
       <ButtonGroup>
         {pages.map(i =>
           <Button
+            key={i}
             cursor={cursor}
             variant="solid"
-            key={i}
             isDisabled={activePage === i + 1}
-            onClick={() => onPageClick(i + 1)}>
+            onClick={onClicks[i]}>
             {i + 1}
           </Button>
         )}
