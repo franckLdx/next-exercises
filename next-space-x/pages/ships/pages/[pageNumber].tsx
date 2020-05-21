@@ -1,11 +1,12 @@
 import React from "react";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
-import { getShips, getShipsCount, ShipResult } from "@services/ships";
+import { getShips, getShipsCount, ShipsResult_Detail } from "@services/ships";
 import { getPagesCount } from "@lib/misc";
-import { SimpleGrid, Text } from "@chakra-ui/core";
+import { SimpleGrid } from "@chakra-ui/core";
 import { MyHead } from "@components/MyHead";
 import { ShipNavPage } from "@ships/ShipNavPage";
 import { Ship } from "@components/ships/Ship";
+import { getShipsUrl } from "@lib/url";
 
 const itemsPerPage = 9;
 
@@ -14,7 +15,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const pagesCount = getPagesCount(shipsCount, itemsPerPage);
   const paths: Array<string> = [];
   for (let pageNumber = 1; pageNumber <= pagesCount; pageNumber++) {
-    paths.push(`/ships/pages/${pageNumber}`);
+    paths.push(getShipsUrl(pageNumber));
   }
   return {
     paths,
@@ -25,7 +26,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 interface PageProps {
   activePage: number;
   pagesCount: number;
-  ships: Array<ShipResult>
+  ships: Array<ShipsResult_Detail>
 }
 
 type UrlParams = { pageNumber: string }

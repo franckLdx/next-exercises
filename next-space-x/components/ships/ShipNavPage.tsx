@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { NavPage } from "@navigation/NavPage";
 import { getShipsUrl } from "@lib/url";
+import { useRouter } from "next/router";
 
 interface Props {
   activePage: number;
@@ -8,7 +9,11 @@ interface Props {
 }
 
 export const ShipNavPage: React.FC<Props> = ({ activePage, pagesCount }) => {
-  const onClick = useCallback(getShipsUrl, []);
+  const router = useRouter()
+  const onClick = useCallback((pageNumber: number) => {
+    const href = getShipsUrl(pageNumber);
+    router.push(href);
+  }, []);
   return (
     <NavPage
       marginY={3}
