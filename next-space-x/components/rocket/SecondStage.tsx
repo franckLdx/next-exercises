@@ -4,6 +4,7 @@ import { RocketDetail_SecondStage } from "@services/rockets";
 import { StatProps, InlineStats } from "@components/InlineStats";
 import StyledSystem from "styled-system";
 import { Box } from "@chakra-ui/core";
+import { SkeletonOnLoading } from "@components/SkeletonOnLoading";
 
 type Props = StyledSystem.MarginProps & {
   secondStage: RocketDetail_SecondStage;
@@ -26,8 +27,10 @@ export const SecondStage: React.FC<Props> = ({ secondStage, ...props }) => {
   );
   return (
     <Box {...props}>
-      <Separator>Second stage</Separator>
-      <InlineStats stats={enginesItems} />
-      <InlineStats stats={thrustItems} />
+      <SkeletonOnLoading>
+        <Separator>Second stage</Separator>
+        <InlineStats stats={enginesItems} />
+        <InlineStats stats={thrustItems} />
+      </SkeletonOnLoading >
     </Box>);
 }

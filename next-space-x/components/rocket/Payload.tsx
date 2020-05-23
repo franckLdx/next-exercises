@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { SubComponentProps } from "./subComponents";
 import { Separator } from "@components/Separator";
 import { StatProps, InlineStats } from "@components/InlineStats";
+import { SkeletonOnLoading } from "@components/SkeletonOnLoading";
 
 export const Payload: React.FC<SubComponentProps> = ({ rocket, ...props }) => {
   const stats: Array<StatProps> = useMemo(
@@ -14,7 +15,7 @@ export const Payload: React.FC<SubComponentProps> = ({ rocket, ...props }) => {
   return (
     <>
       <Separator {...props}>Payload</Separator>
-      <InlineStats stats={stats} />
+      <SkeletonOnLoading><InlineStats stats={stats} /></SkeletonOnLoading>
     </>
   );
 }
