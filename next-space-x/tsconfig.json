@@ -24,6 +24,9 @@
       "@ships/*": [
         "components/ships/*"
       ],
+      "@ship/*": [
+        "components/ship/*"
+      ],
       "@lib/*": [
         "lib/*"
       ]

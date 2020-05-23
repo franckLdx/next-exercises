@@ -1,13 +1,12 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import NextError from "next/error";
 import { getShipIds, ShipDetail, getShip } from "@services/ships";
-import { getShipUrl, getLaunchUrl } from "@lib/url";
+import { getShipUrl } from "@lib/url";
 import { MyHead } from "@components/MyHead";
-import { Heading, Image, List, ListItem } from "@chakra-ui/core";
-import { StatProps, InlineStats } from "@components/InlineStats";
-import { Separator } from "@components/Separator";
-import { MyNextLink } from "@components/MyNextLink";
+import { Head } from "@ship/Head";
+import { Role } from "@ship/Role";
+import { Launch } from "@ship/Launch";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const shipIds = await getShipIds();
@@ -36,42 +35,17 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({ params }: GetS
   }
 }
 
-const separatorSize_sm = "2";
 const separatorSize_xl = "4";
 
 const Ship: React.FC<PageProps> = ({ ship }) => {
   if (!ship) {
     return <NextError statusCode={404} />;
   }
-  const firstLine = useMemo(
-    (): Array<StatProps> => {
-      const stats = [
-        { id: "Port", label: 'Home port', data: ship.home_port },
-      ];
-      if (ship.weight_kg) {
-        stats.push({ id: "Weight", label: "Weight", data: `${ship.weight_kg}kg` })
-      }
-      return stats;
-    },
-    [ship]
-  );
   return (<>
     <MyHead title={ship.name} />
-    <Heading as="h1" marginBottom={separatorSize_xl}>{ship.name} -- A {ship.type} of {ship.year_built}</Heading>
-    <Image src={ship.image} alt={`A ${ship.name} photo`} marginBottom={separatorSize_xl} />
-    <InlineStats stats={firstLine} />
-    <Separator>Roles</Separator>
-    <List styleType="disc" marginTop={separatorSize_sm} marginBottom={separatorSize_xl}>
-      {ship.roles.map(role => <ListItem key={role}>{role}</ListItem>)}
-    </List>
-    <Separator>Launches</Separator>
-    <List styleType="disc" marginTop={separatorSize_sm}>
-      {ship.missions.map(mission =>
-        <ListItem key={mission.flight}>
-          <MyNextLink href={getLaunchUrl(mission.flight)}>{mission.name}</MyNextLink>
-        </ListItem>
-      )}
-    </List>
+    <Head marginBottom={separatorSize_xl} ship={ship} />
+    <Role marginBottom={separatorSize_xl} ship={ship} />
+    <Launch ship={ship} />
   </>);
 }
 

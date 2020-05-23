@@ -5,7 +5,7 @@ import { LaunchDetail, getLaunch } from "@services/launches";
 import { MyHead } from "@components/MyHead";
 import { Carousel } from "@components/Carousel";
 import { VideoPlayer } from "@components/VideoPlayer";
-import { Head } from "@launch/Head";
+import { Head } from "@components/launch/Head";
 import { Description } from "@launch/Description";
 import { Ships } from "@launch/Ships";
 import { SkeletonOnLoading } from "@components/SkeletonOnLoading";
