@@ -16,7 +16,7 @@ export const Launch: React.FC<LaunchProps> = ({ launch }) => {
     <LinkCard href={getLaunchUrl(launch.id)}>
       <Heading as="h1" size="md">{launch.mission_name} -- {launch.rocket.rocket_name}</Heading>
       {distanceDate(launch.launch_date_utc, now)} ago from {launch.launch_site.site_name_long}
-      <Carousel marginTop="sm" size="sm" images={launch.links.flickr_images} />
+      <Carousel marginTop="sm" size="sm" marginX="auto" images={launch.links.flickr_images} />
     </LinkCard>
   );
 };

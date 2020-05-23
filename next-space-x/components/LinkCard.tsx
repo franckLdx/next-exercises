@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
-import { PseudoBox } from "@chakra-ui/core";
+import { PseudoBox, Skeleton } from "@chakra-ui/core";
 import { MyNextLink } from "./MyNextLink";
+import { useIsLoading } from "@lib/useIsLoading";
 
 interface Props {
   href: string;
@@ -11,6 +12,7 @@ export const LinkCard: React.FC<Props> = ({ href, children }) => {
     () => ({ border: "2px solid", borderColor: "white" }),
     []
   );
+  const isLoading = useIsLoading()
   return (
     <PseudoBox
       border="1px solid"
@@ -18,11 +20,13 @@ export const LinkCard: React.FC<Props> = ({ href, children }) => {
       padding={2}
       _hover={hoverStyle}
     >
-      <article>
-        <MyNextLink href={href}>
-          {children}
-        </MyNextLink>
-      </article>
+      <Skeleton isLoaded={!isLoading}>
+        <article>
+          <MyNextLink href={href}>
+            {children}
+          </MyNextLink>
+        </article>
+      </Skeleton>
     </PseudoBox>
   );
 }
