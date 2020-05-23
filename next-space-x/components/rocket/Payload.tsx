@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
-import { SubComponentProps } from "./subComponents";
+import { Props } from "./Props";
 import { Separator } from "@components/Separator";
 import { StatProps, InlineStats } from "@components/InlineStats";
 import { SkeletonOnLoading } from "@components/SkeletonOnLoading";
 
-export const Payload: React.FC<SubComponentProps> = ({ rocket, ...props }) => {
+export const Payload: React.FC<Props> = ({ rocket, ...props }) => {
   const stats: Array<StatProps> = useMemo(
     () => rocket.payload_weights.map(
       ({ id, name, kg }) => ({ id, label: name, data: `${kg} kg` })

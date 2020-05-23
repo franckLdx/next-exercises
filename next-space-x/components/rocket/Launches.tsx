@@ -5,10 +5,10 @@ import { MyNextLink } from "@components/MyNextLink";
 import { getLaunchUrl } from "@lib/url";
 import { formatDate } from "@lib/misc";
 import { List, ListItem, Box, Text } from "@chakra-ui/core";
-import StyledSystem from "styled-system";
 import { SkeletonOnLoading } from "@components/SkeletonOnLoading";
+import StyledSystem from "styled-system";
 
-type Props = StyledSystem.MarginProps & {
+type Props = StyledSystem.MarginTopProps & {
   launches: Array<LaunchRocketResult>
 }
 

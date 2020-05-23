@@ -2,13 +2,14 @@ import React, { useMemo } from "react";
 import { Separator } from "@components/Separator";
 import { InlineStats, StatProps } from "@components/InlineStats";
 import { RocketDetail_FirstStage } from "@services/rockets";
-import StyledSystem from "styled-system";
 import { Box } from "@chakra-ui/core";
 import { SkeletonOnLoading } from "@components/SkeletonOnLoading";
+import StyledSystem from "styled-system";
 
-type Props = StyledSystem.MarginProps & {
+type Props = StyledSystem.MarginTopProps & {
   firstStage: RocketDetail_FirstStage
 }
+
 export const FirstStage: React.FC<Props> = ({ firstStage, ...props }) => {
   const reusableStats = useMemo(
     (): Array<StatProps> => [{ id: "reusable", label: "Reusable", data: firstStage.reusable ? "Yes" : "No" }],

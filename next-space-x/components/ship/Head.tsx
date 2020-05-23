@@ -4,7 +4,7 @@ import { SkeletonOnLoading } from "@components/SkeletonOnLoading";
 import { InlineStats, StatProps } from "@components/InlineStats";
 import { Props } from "./Props";
 
-export const Head: React.FC<Props> = ({ ship, marginBottom }) => {
+export const Head: React.FC<Props> = ({ ship, marginTop }) => {
   const firstLine = useMemo(
     (): Array<StatProps> => {
       const stats = [
@@ -21,7 +21,8 @@ export const Head: React.FC<Props> = ({ ship, marginBottom }) => {
     <SkeletonOnLoading>
       <Heading
         as="h1"
-        marginBottom={marginBottom}>
+        marginTop={marginTop}
+      >
         {ship.name} -- A {ship.type} of {ship.year_built}
       </Heading>
     </SkeletonOnLoading>

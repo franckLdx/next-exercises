@@ -1,7 +1,6 @@
 import { ShipDetail } from "@services/ships";
 import StyledSystem from "styled-system";
 
-export interface Props {
+export type Props = StyledSystem.MarginTopProps & {
   ship: ShipDetail
-  marginBottom?: StyledSystem.ResponsiveValue<string | number>
 }

@@ -2,11 +2,11 @@ import React, { useMemo } from "react";
 import { Separator } from "@components/Separator";
 import { RocketDetail_SecondStage } from "@services/rockets";
 import { StatProps, InlineStats } from "@components/InlineStats";
-import StyledSystem from "styled-system";
 import { Box } from "@chakra-ui/core";
 import { SkeletonOnLoading } from "@components/SkeletonOnLoading";
+import StyledSystem from "styled-system";
 
-type Props = StyledSystem.MarginProps & {
+type Props = StyledSystem.MarginTopProps & {
   secondStage: RocketDetail_SecondStage;
 }
 

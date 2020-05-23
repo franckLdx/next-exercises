@@ -35,17 +35,15 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({ params }: GetS
   }
 }
 
-const separatorSize_xl = "4";
-
 const Ship: React.FC<PageProps> = ({ ship }) => {
   if (!ship) {
     return <NextError statusCode={404} />;
   }
   return (<>
     <MyHead title={ship.name} />
-    <Head marginBottom={separatorSize_xl} ship={ship} />
-    <Role marginBottom={separatorSize_xl} ship={ship} />
-    <Launch ship={ship} />
+    <Head marginTop={4} ship={ship} />
+    <Role marginTop={10} ship={ship} />
+    <Launch marginTop={10} ship={ship} />
   </>);
 }
 

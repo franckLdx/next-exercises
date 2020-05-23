@@ -2,13 +2,13 @@ import React, { useMemo } from 'react';
 import { PseudoBox } from '@chakra-ui/core';
 import { MyNextLink } from '@components/MyNextLink';
 
-interface NavItemProps {
+interface Props {
   href: string;
   label: string;
   isActive?: boolean;
 }
 
-export const NavItem: React.FC<NavItemProps> = React.memo(({ href, label, isActive }) => {
+export const NavLink: React.FC<Props> = React.memo(({ href, label, isActive }) => {
   const borderBottom = useMemo(() => {
     return isActive ? "4px solid" : undefined;
   }, [isActive]);

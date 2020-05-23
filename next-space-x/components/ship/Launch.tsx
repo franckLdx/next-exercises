@@ -6,8 +6,8 @@ import { getLaunchUrl } from "@lib/url";
 import { SkeletonOnLoading } from "@components/SkeletonOnLoading";
 import { Props } from "@ship/Props";
 
-export const Launch: React.FC<Props> = ({ ship }) => <>
-  <Separator>Launches</Separator>
+export const Launch: React.FC<Props> = ({ ship, marginTop }) => <>
+  <Separator marginTop={marginTop}>Launches</Separator>
   <SkeletonOnLoading>
     <List styleType="disc" marginTop={2}>
       {ship.missions.map(mission =>

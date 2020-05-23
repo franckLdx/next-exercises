@@ -46,8 +46,6 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({ params }: GetS
   return { props: { rockets, rocket, launches } };
 }
 
-const margin = "10";
-
 const Rockets: React.FC<PageProps> = ({ rockets, rocket, launches }) => {
   if (!rockets || !rockets.length) {
     return <NextError statusCode={500} />;
@@ -59,10 +57,10 @@ const Rockets: React.FC<PageProps> = ({ rockets, rocket, launches }) => {
         {rocket.name}
       </Heading>
       <Description rocket={rocket} />
-      <Payload rocket={rocket} />
-      <FirstStage marginTop={margin} firstStage={rocket.first_stage} />
-      <SecondStage marginTop={margin} secondStage={rocket.second_stage} />
-      <Launches marginTop={margin} launches={launches} />
+      <Payload marginTop={10} rocket={rocket} />
+      <FirstStage marginTop={10} firstStage={rocket.first_stage} />
+      <SecondStage marginTop={10} secondStage={rocket.second_stage} />
+      <Launches marginTop={10} launches={launches} />
     </>
   );
 }

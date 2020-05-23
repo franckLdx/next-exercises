@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { ButtonGroup, Button, Flex } from "@chakra-ui/core";
 import StyledSystem from "styled-system";
 import { useCursor } from "@lib/useCursor";
+import { useIsLoading } from "@lib/useIsLoading";
 
 export type NavPageProps = StyledSystem.MarginProps & {
   pagesCount: number;
@@ -18,6 +19,7 @@ export const NavPage: React.FC<NavPageProps> = React.memo(({ pagesCount, activeP
     [pagesCount]
   );
   const [cursor, _] = useCursor("pointer");
+  const isLoading = useIsLoading();
   return (
     <Flex flexWrap="wrap" justify="center" {...props}>
       <ButtonGroup>
@@ -27,7 +29,8 @@ export const NavPage: React.FC<NavPageProps> = React.memo(({ pagesCount, activeP
             cursor={cursor}
             variant="solid"
             isDisabled={activePage === i + 1}
-            onClick={onClicks[i]}>
+            onClick={onClicks[i]}
+            isLoading={isLoading}>
             {i + 1}
           </Button>
         )}

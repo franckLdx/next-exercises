@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { RocketsList } from "@services/rockets";
 import { Flex } from "@chakra-ui/core";
-import { NavItem } from "@navigation/NavItem";
+import { NavLink } from "@navigation/NavLink";
 import { useRouter } from "next/router";
 import { getRocketUrl } from "@lib/url";
 import { SkeletonOnLoading } from "@components/SkeletonOnLoading";
@@ -22,7 +22,7 @@ export const NavRockets: React.FC<Props> = ({ rockets }) => {
         {rockets.map(
           ({ id, name }) => {
             const href = getRocketUrl(id);
-            return <NavItem key={id} href={href} isActive={isActive(id)} label={name} />
+            return <NavLink key={id} href={href} isActive={isActive(id)} label={name} />
           }
         )}
       </Flex>

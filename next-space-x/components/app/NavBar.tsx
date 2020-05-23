@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import StyledSystem from "styled-system";
 import { NavBar } from '@navigation/NavBar';
-import { NavItem } from '@navigation/NavItem';
+import { NavLink } from '@navigation/NavLink';
 import { Image } from '@chakra-ui/core';
 import { getLaunchesUrl, getRocketsUrl, getShipsUrl } from '@lib/url';
 import { useRouter } from 'next/router';
@@ -24,9 +24,9 @@ export const AppNavBar: React.FunctionComponent<StyledSystem.MarginProps> = Reac
     return (
       <NavBar {...props}>
         <Image height="25px" src="/spacex_logo_white.png" alt="SpaceX logo" />
-        <NavItem key={launchesIndex} href={launchesIndex} isActive={isActive(launchesIndex)} label="Launches" />
-        <NavItem key={rocketsIndex} href={rocketsIndex} isActive={isActive(rocketsIndex)} label="Rockets" />
-        <NavItem key={shipsIndex} href={shipsIndex} isActive={isActive(shipsIndex)} label="Ships" />
+        <NavLink key={launchesIndex} href={launchesIndex} isActive={isActive(launchesIndex)} label="Launches" />
+        <NavLink key={rocketsIndex} href={rocketsIndex} isActive={isActive(rocketsIndex)} label="Rockets" />
+        <NavLink key={shipsIndex} href={shipsIndex} isActive={isActive(shipsIndex)} label="Ships" />
       </NavBar>
     )
   }
