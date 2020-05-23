@@ -8,6 +8,7 @@ import { VideoPlayer } from "@components/VideoPlayer";
 import { Head } from "@launch/Head";
 import { Description } from "@launch/Description";
 import { Ships } from "@launch/Ships";
+import { SkeletonOnLoading } from "@components/SkeletonOnLoading";
 
 const separatorHeight = "10px";
 const imageSize = ["sm", "2xl"];
@@ -42,17 +43,21 @@ const Launch: NextPage<Props> = ({ launchResult, statusCode }) => {
       launchResult={launchResult}
       marginBottom={separatorHeight}
     />
-    <Carousel
-      marginBottom={separatorHeight}
-      size={["sm", "2xl"]}
-      images={launchResult.links.flickr_images}
-      alt="Mission images"
-    />
-    <VideoPlayer
-      href={launchResult.links.video_link}
-      marginBottom={separatorHeight}
-      size={["sm", "2xl"]}
-    />
+    <SkeletonOnLoading>
+      <Carousel
+        marginBottom={separatorHeight}
+        size={["sm", "2xl"]}
+        images={launchResult.links.flickr_images}
+        alt="Mission images"
+      />
+    </SkeletonOnLoading>
+    <SkeletonOnLoading>
+      <VideoPlayer
+        href={launchResult.links.video_link}
+        marginBottom={separatorHeight}
+        size={["sm", "2xl"]}
+      />
+    </SkeletonOnLoading>
     <Ships
       launchResult={launchResult}
       size={imageSize}
