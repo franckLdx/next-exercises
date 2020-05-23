@@ -15,7 +15,7 @@ export const MediaDescription: React.FC<Props> = ({ imgUrl, altImg, children, ..
       src={imgUrl}
       alt={altImg}
       marginRight="15px"
-      objectFit="cover"
+      objectFit="contain"
     />}
     <Box position="relative" top="0.5em">
       {children}

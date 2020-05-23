@@ -1,21 +1,16 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { NextPage, GetServerSideProps, GetServerSidePropsContext } from "next";
 import Error from "next/error";
-import { Heading, Box, Link, Image, Flex, FlexProps } from "@chakra-ui/core";
-import StyledSystem from "styled-system";
-import { LaunchDetail, getLaunch, LaunchDetail_Ship } from "@services/launches";
+import { LaunchDetail, getLaunch } from "@services/launches";
 import { MyHead } from "@components/MyHead";
 import { Carousel } from "@components/Carousel";
 import { VideoPlayer } from "@components/VideoPlayer";
-import { MyNextLink } from "@components/MyNextLink";
-import { MediaDescription } from "@components/MediaDescription";
-import { getRocketUrl, getShipUrl } from "@lib/url";
-import { distanceDate } from "@lib/misc";
+import { Head } from "@launch/Head";
+import { Description } from "@launch/Description";
+import { Ships } from "@launch/Ships";
 
-const separatorSize_xl = "10px";
-const separatorSize_sm = "5px";
-
-const imageSize = "2xl";
+const separatorHeight = "10px";
+const imageSize = ["sm", "2xl"];
 
 type Props =
   { launchResult: LaunchDetail, statusCode: null } |
@@ -45,112 +40,24 @@ const Launch: NextPage<Props> = ({ launchResult, statusCode }) => {
     <Head launchResult={launchResult} />
     <Description
       launchResult={launchResult}
-      marginBottom={separatorSize_xl}
+      marginBottom={separatorHeight}
     />
     <Carousel
-      marginBottom={separatorSize_xl}
-      size={imageSize}
+      marginBottom={separatorHeight}
+      size={["sm", "2xl"]}
       images={launchResult.links.flickr_images}
       alt="Mission images"
     />
     <VideoPlayer
       href={launchResult.links.video_link}
-      size={imageSize}
-      marginBottom={separatorSize_xl}
+      marginBottom={separatorHeight}
+      size={["sm", "2xl"]}
     />
     <Ships
       launchResult={launchResult}
+      size={imageSize}
     />
   </>
 }
 
 export default Launch;
-
-interface HeadProps {
-  launchResult: LaunchDetail
-}
-const Head: React.FC<HeadProps> = ({ launchResult }) => {
-  const rocketUrl = useMemo(
-    () => launchResult ? getRocketUrl(launchResult.rocket.rocket.id) : "",
-    [launchResult]
-  );
-  return (
-    <Heading as="h1" size="xl" display="flex">
-      <MyNextLink href={rocketUrl} >
-        {launchResult.mission_name} -- A {launchResult.rocket.rocket_name} mission
-      </MyNextLink>
-    </Heading>);
-}
-
-type DescriptionProps = StyledSystem.MarginProps & {
-  launchResult: LaunchDetail
-}
-
-const Description: React.FC<DescriptionProps> = ({ launchResult, ...props }) => {
-  const distanceMsg = useMemo(
-    () => `${distanceDate(launchResult.launch_date_utc, Date.now())} ago from ${launchResult.launch_site.site_name_long}`,
-    [launchResult]
-  );
-  const details = useMemo(
-    () => {
-      if (!launchResult.details) {
-        return <>Sorry, description not yet provided !</>
-      }
-      return (
-        <Box>
-          {launchResult.details} (<Link href={launchResult.links.wikipedia} isExternal>Related wikipedia article</Link>,&nbsp;
-          <Link href={launchResult.links.video_link} isExternal>Related video article</Link>)
-        </Box>
-      );
-    },
-    [launchResult]
-  );
-  return (
-    <MediaDescription
-      {...props}
-      imgUrl={launchResult.links.mission_patch}
-      altImg="mission patch logo">
-      <Box marginBottom={separatorSize_sm}>
-        {distanceMsg}
-      </Box>
-      {details}
-    </MediaDescription>
-  );
-};
-
-type ShipsProps = StyledSystem.MarginProps & {
-  launchResult: LaunchDetail
-}
-const Ships: React.FC<ShipsProps> = ({ launchResult, ...props }) => {
-  if (launchResult.ships.length === 0) {
-    return <Box />;
-  }
-  return (
-    <Box {...props}>
-      Ships involed by this mission:
-      {launchResult.ships.map(ship =>
-        <Ship
-          key={ship.id}
-          ship={ship}
-          marginBottom={separatorSize_sm}
-        />)}
-    </Box>
-  );
-}
-
-type ShipProps = Omit<FlexProps, 'display' | 'flexWrap' | 'direction' | 'alignItems' | 'justifyContent'> & {
-  ship: LaunchDetail_Ship;
-}
-const Ship: React.FC<ShipProps> = ({ ship: { id, image, name }, ...flexProps }) =>
-  <MyNextLink href={getShipUrl(id)}>
-    <Flex {...flexProps} flexWrap="wrap" direction="row">
-      {image &&
-        <Image
-          src={image}
-          alt="Ship's photo"
-          size={imageSize}
-          marginRight={separatorSize_sm}
-        />}
-      {name}
-    </Flex>
-  </MyNextLink>

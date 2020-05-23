@@ -15,6 +15,9 @@
       "@launches/*": [
         "components/launches/*"
       ],
+      "@launch/*": [
+        "components/launch/*"
+      ],
       "@rocket/*": [
         "components/rocket/*"
       ],
