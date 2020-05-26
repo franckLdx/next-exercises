@@ -1,3 +1,9 @@
+A little exercise to train myself to latest next features. Therefore, I use getServerSideProps for some 
+pages and getStaticPaths/getStaticProps for some others, even if in real application I would use 
+getStaticPaths/getStaticProps for everything.
+
+-----------------------------------------------------------------------------------------------
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
